@@ -6,18 +6,23 @@ import plotly.express as px
 import numpy as np
 import geopandas as gpd
 
+# LOAD DATA
 df_places = gpd.read_file("./data/COMMERCES.geojson")
-
 lon = []
 lat = []
-
 for i in df_places["geometry"]:
     lon.append(i.x)
     lat.append(i.y)
 
+# CREATE FIGURE
 fig = px.scatter_mapbox(df_places, lon=lon, lat=lat, hover_name="LIBACT")
+
+# LAYOUT (background, margins)
 fig.update_layout(mapbox_style="open-street-map")
 fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-fig.update_traces(marker=dict(size=12), selector=dict(mode='markers'))
 
+# TRACES (markers)
+fig.update_traces(marker=dict(size=8), selector=dict(mode='markers'))
+
+# SHOW
 fig.show()
