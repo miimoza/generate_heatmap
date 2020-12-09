@@ -19,7 +19,7 @@ def add_button(fig):
                         method="restyle"
                     )
                 ]),
-                pad={"r": 10, "t": 10},
+                pad={"r": 30, "t": 10},
                 showactive=True,
                 x=0,
                 xanchor="left",

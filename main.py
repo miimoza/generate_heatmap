@@ -10,7 +10,7 @@ import representation_toggle
 
 
 def main():
-    df_places = load_data("data/COMMERCES.geojson")
+    df_places = load_data("data/COMMERCE_ALIMENTAIRE.geojson")
     libact_list = set(df_places["LIBACT"])
 
     lon, lat = get_coord(df_places)
