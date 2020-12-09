@@ -1,6 +1,7 @@
 ============= TO DO LIST  =============
 
 - OSM with point normal
-- heatmap pour une activite voulu
+- input pour choisir libact
+- input pour choisir heatmap mode ou point mode
 - detecteur de cluster pour une activite
 - detecteur de cluster melant differente activite (selectionne ou non)
