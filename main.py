@@ -6,7 +6,7 @@ import plotly.express as px
 import numpy as np
 import geopandas as gpd
 
-df_places = gpd.read_file("./data/COMMERCE_AUTRE.geojson")
+df_places = gpd.read_file("./data/all.geojson")
 
 lon = []
 lat = []
