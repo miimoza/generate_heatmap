@@ -1,29 +1,21 @@
-from google.cloud import bigquery
+#!/usr/bin/env python3
 import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 import plotly.express as px
 import numpy as np
+import geopandas as gpd
 
+df_places = gpd.read_file("./data/COMMERCE_AUTRE.geojson")
 
-client = bigquery.Client()
+lon = []
+lat = []
 
-# on recupere les coordonnees de chaque store
-#le < 90 est important car certaines coordonnees sont erronnees et empêchent plot
+for i in df_places["geometry"]:
+    lon.append(i.x)
+    lat.append(i.y)
 
-stores_query = """
-SELECT stoEan, postcode, stoAnabelKey, chainTypeKey, geoLocation.geoX, geoLocation.geoY
-FROM dsfr-frxxx-frxxx-dev.PSC_referentiel.bv_store
-WHERE geoLocation.geoX is not null
-AND geoLocation.geoX < 90
-LIMIT 10000
-"""
-stores = client.query(stores_query).to_dataframe()
-stores.head(100)
-
-#on l'affiche avec plotly express
-
-fig = px.scatter_mapbox(stores, lat="geoY", lon="geoX",color="chainTypeKey", hover_data=["stoEan", "stoAnabelKey"])
+fig = px.scatter_mapbox(df_places, lon=lon, lat=lat, hover_name="LIBACT")
 fig.update_layout(mapbox_style="open-street-map")
 fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 fig.update_traces(marker=dict(size=12), selector=dict(mode='markers'))
