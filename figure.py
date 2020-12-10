@@ -9,9 +9,8 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import time
 
-
 def get_figure(libact_list, heatmap=True):
-    df_places = load_data("data/COMMERCES.geojson", libact_list)
+    df_places = load_data(libact_list)
     
     lon, lat = get_coord(df_places)
 
@@ -33,9 +32,12 @@ def get_figure(libact_list, heatmap=True):
     # RETURN
     return fig
 
+def load_geojson(path):
+    global geo_panda
+    geo_panda = gpd.read_file(path)
 
-def load_data(path, libact_list):
-    df_places = gpd.read_file(path)
+def load_data(libact_list):
+    df_places = geo_panda.copy(deep=True)
 
     df_places = df_places.query("LIBACT != 'Locaux Vacants' and\
                              LIBACT != 'Locaux en travaux' and\

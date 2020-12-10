@@ -8,6 +8,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 
 def main():
+    figure.load_geojson("data/COMMERCES.geojson")
     start_server()
 
 def libacts_to_html_figure(libacts):
