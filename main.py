@@ -13,18 +13,18 @@ def main():
 
 def libact_to_html_figure(libacts):
 
-    figs = figure.get_figure(libacts)
+    fig = figure.get_figure(libacts)
 
     frame_html = "<html><head></head><body>" + "\n"
     add_js = True
 
-    for fig in figs:
-        inner_html = pyo.plot(
-            fig, include_plotlyjs=add_js, output_type='div'
-        )
+    inner_html = pyo.plot(
+        fig, include_plotlyjs=add_js, output_type='div'
+    )
 
-        frame_html += inner_html
-        add_js = False
+    frame_html += inner_html
+    
+    add_js = False
     frame_html += "</body></html>" + "\n"
     return frame_html
 
