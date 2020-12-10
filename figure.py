@@ -11,13 +11,13 @@ import time
 
 
 def get_figure(libact_list, heatmap=True):
-    df_places = load_data("data/COMMERCE_ALIMENTAIRE.geojson", libact_list)
+    df_places = load_data("data/COMMERCES.geojson", libact_list)
     
     lon, lat = get_coord(df_places)
 
     if heatmap:
         fig = px.density_mapbox(df_places, lon=lon, lat=lat, hover_name="LIBACT", \
-                            radius=4, center=dict(lat=48.86, lon=2.35), zoom=12.2)
+                            radius=8, center=dict(lat=48.86, lon=2.35), zoom=12.2)
     else:
         fig = px.scatter_mapbox(df_places, lon=lon, lat=lat, hover_name="LIBACT", \
                             center=dict(lat=48.86, lon=2.35), zoom=12.2)
