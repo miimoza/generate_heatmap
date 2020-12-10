@@ -14,6 +14,7 @@ def main():
 def libacts_to_html_figure(libacts):
     fig = figure.get_figure(libacts)
     frame_html = "<html><head></head><body>" + "\n"
+    fig.layout.height=768
     frame_html += pyo.plot(
         fig, include_plotlyjs=True, output_type='div'
     )
@@ -31,9 +32,9 @@ def start_server():
         ),
         dcc.Input(id='input-on-submit', value='Monoprix', type="text"),
         html.Button('Click Me', id='submit-val', n_clicks=0),
-        html.Div(html.Iframe(id='output-iframe', srcDoc="Loading...", style = {'width': '100%', 'height': '100%', 'position': 'absolute'}),
+        html.Div(html.Iframe(id='output-iframe', srcDoc="Loading...", style = {'width': '100%', 'height': '100%'}),
             style = {'width': '100%', 'height': '100%', 'overflow': 'hidden', "backgroundColor": "yellow"}),
-    ], style = {'width': '500px', 'height': '500px', 'overflow': 'hidden', "backgroundColor": "red"})
+    ], style = {'width': '100%', 'height': '896px', 'overflow': 'hidden', "backgroundColor": "red"})
 
     @app.callback(
         dash.dependencies.Output('output-iframe', 'srcDoc'),
