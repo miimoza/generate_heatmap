@@ -1,7 +1,8 @@
 TO DO LIST  
 ==========
 
-- [ ] input pour choisir libact
+- [X] input pour choisir libact
+    - [ ] multiple libacts
 - [ ] input pour choisir heatmap mode ou point mode
 - [ ] donner les activites les plus courantes dans un secteur dessines
 - [ ] donner la specifite d'une zone dessine par rapport a la moyenne
