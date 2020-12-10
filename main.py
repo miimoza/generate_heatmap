@@ -8,7 +8,7 @@ def main():
     figs.append(figure.get_figure(["Alimentation générale  <120m²"]))
     figs.append(figure.get_figure(["Alimentation générale de luxe > 300 m²"], False))
 
-    figures_to_html(figs, "index.html")
+    figures_to_html(figs, "figure.html")
 
 def figures_to_html(figs, filename):
     '''Saves a list of plotly figures in an html file.
