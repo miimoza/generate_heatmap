@@ -24,7 +24,7 @@ def start_server():
             options=[
                 {'label': libact, 'value': libact} for libact in libact_list]
         ),
-        dcc.Input(id='input-on-submit', value='Tabac', type="text"),
+        #dcc.Input(id='input-on-submit', value='Tabac', type="text"),
         html.Button('Click Me', id='submit-val', n_clicks=0)
     ]
 
@@ -46,6 +46,9 @@ def start_server():
     def update_output(n_clicks, value):
         print("nclicks: " + str(n_clicks))
         print("value: " + str(value))
+        if value == []:
+            print("None of the checkboxes is checkked!")
+            return "ptn tu coche rien mec"
         return figure.get_figure(value)
 
     # RUN SERVER
@@ -62,7 +65,8 @@ styleContainer = {
 
 styleInputDiv = {
     'backgroundColor': 'red',
-    'padding': '4px'
+    'padding': '4px',
+    'font-size' : '12px'
 }
 
 styleMapDiv = {
