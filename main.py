@@ -3,27 +3,18 @@
 import figure
 
 import dash
-import plotly.offline as pyo
 import dash_html_components as html
 import dash_core_components as dcc
 
 def main():
+    # LOAD FILE ONCE
     figure.load_geojson("data/COMMERCES.geojson")
+    # START SERVER
     start_server()
 
-def libacts_to_html_figure(libacts):
-    fig = figure.get_figure(libacts)
-    frame_html = "<html><head></head><body>" + "\n"
-    fig.layout.height=768
-    frame_html += pyo.plot(
-        fig, include_plotlyjs=True, output_type='div'
-    )
-    frame_html += "</body></html>" + "\n"
-    return frame_html
-
 def start_server():
-    app = dash.Dash()
-    app.layout = html.Div([
+    # INPUT SECTION
+    inputSection = [
         dcc.Checklist(
             id='heatmap-input',
             options=[
@@ -31,38 +22,54 @@ def start_server():
             ]
         ),
         dcc.Input(id='input-on-submit', value='Monoprix', type="text"),
-        html.Button('Click Me', id='submit-val', n_clicks=0),
-        html.Div(html.Iframe(id='output-iframe', srcDoc="Loading...", style = {'width': '100%', 'height': '100%'}),
-            style = {'width': '100%', 'height': '100%', 'overflow': 'hidden', "backgroundColor": "yellow"}),
-    ], style = {'width': '100%', 'height': '896px', 'overflow': 'hidden', "backgroundColor": "red"})
+        html.Button('Click Me', id='submit-val', n_clicks=0)
+    ]
 
+    # MAP SECTION
+    mapSection = dcc.Graph(id='output-iframe', style=styleMap)
+
+    # DASH
+    app = dash.Dash(__name__)
+    app.layout = html.Div([
+        html.Div(inputSection, style = styleInputDiv),
+        html.Div(mapSection, style = styleMapDiv)
+    ], style = styleContainer)
+
+    # CALLBACKS
     @app.callback(
-        dash.dependencies.Output('output-iframe', 'srcDoc'),
+        dash.dependencies.Output('output-iframe', 'figure'),
         [dash.dependencies.Input('submit-val', 'n_clicks')],
         [dash.dependencies.State('input-on-submit', 'value')])
     def update_output(n_clicks, value):
-        return libacts_to_html_figure([value])
+        return figure.get_figure([value])
 
-    app.run_server(port=8052)
+    # RUN SERVER
+    app.run_server(debug=False, port=8052)
 
+styleContainer = {
+    'width': '100vw',
+    'height': '100vh',
+    'backgroundColor': 'green',
+    'padding': '0px',
+    'flex-direction': 'column',
+    'display': 'flex'
+}
 
+styleInputDiv = {
+    'backgroundColor': 'red',
+    'padding': '4px'
+}
 
-"""
-    dashboard = open(filename, 'w')
-    dashboard.write("<html><head></head><body>" + "\n")
+styleMapDiv = {
+    'backgroundColor': 'yellow',
+    'padding': '4px',
+    'flex': '1'
+}
 
-    add_js = True
-    for fig in figs:
-
-        inner_html = pyo.plot(
-            fig, include_plotlyjs=add_js, output_type='div'
-        )
-
-        dashboard.write(inner_html)
-        add_js = False
-
-    dashboard.write("</body></html>" + "\n")
-"""
+styleMap = {
+    'height': '100%',
+    'width': '100%'
+}
 
 if __name__ == "__main__":
     main()
