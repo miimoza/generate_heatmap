@@ -11,7 +11,7 @@ import time
 
 def get_figure(libact_list, heatmap=True):
     df_places = load_data(libact_list)
-    
+
     lon, lat = get_coord(df_places)
 
     if heatmap:
@@ -20,7 +20,7 @@ def get_figure(libact_list, heatmap=True):
     else:
         fig = px.scatter_mapbox(df_places, lon=lon, lat=lat, hover_name="LIBACT", \
                             center=dict(lat=48.86, lon=2.35), zoom=12.2)
-    
+
 
     # TRACES (markers)
     fig.update_traces(marker=dict(size=8), selector=dict(mode='markers'))
@@ -39,18 +39,21 @@ def load_geojson(path):
 def load_data(libact_list):
     df_places = geo_panda.copy(deep=True)
 
-    df_places = df_places.query("LIBACT != 'Locaux Vacants' and\
-                             LIBACT != 'Locaux en travaux' and\
-                             LIBACT != 'Bureau en boutique'")
 
-    
-    df_final = []
-    for libact in libact_list:
-        df_final.append(df_places[df_places.LIBACT == libact])
+    #df_places = df_places[LIBACT == ]
+    #df_places = df_places.query("LIBACT != 'Locaux Vacants' and\
+    #                         LIBACT != 'Locaux en travaux' and\
+    #                         LIBACT != 'Bureau en boutique'")
+
+    print("Generate geopandas dataframe with libacts: " + str(libact_list))
+    df_final = df_places[df_places.LIBACT == libact_list[0]]
+    for libact in libact_list[1:]:
+        print("Add:" + libact)
+        df_final = df_final.append(df_places[df_places.LIBACT == libact])
 
     # merge all mdr
 
-    return df_final[0]
+    return df_final
 
 def get_coord(df):
     lon = []
@@ -60,4 +63,3 @@ def get_coord(df):
         lat.append(i.y)
 
     return lon, lat
-

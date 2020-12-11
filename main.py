@@ -13,15 +13,18 @@ def main():
     start_server()
 
 def start_server():
+    with open('libact_list') as f:
+        libact_list = f.read().splitlines()
+
     # INPUT SECTION
     inputSection = [
         dcc.Checklist(
-            id='heatmap-input',
+            #id='heatmap-input',
+            id='libact',
             options=[
-                {'label':'Heatmap', 'value': 'Heatmap'},
-            ]
+                {'label': libact, 'value': libact} for libact in libact_list]
         ),
-        dcc.Input(id='input-on-submit', value='Monoprix', type="text"),
+        dcc.Input(id='input-on-submit', value='Tabac', type="text"),
         html.Button('Click Me', id='submit-val', n_clicks=0)
     ]
 
@@ -39,9 +42,11 @@ def start_server():
     @app.callback(
         dash.dependencies.Output('output-iframe', 'figure'),
         [dash.dependencies.Input('submit-val', 'n_clicks')],
-        [dash.dependencies.State('input-on-submit', 'value')])
+        [dash.dependencies.State('libact', 'value')])
     def update_output(n_clicks, value):
-        return figure.get_figure([value])
+        print("nclicks: " + str(n_clicks))
+        print("value: " + str(value))
+        return figure.get_figure(value)
 
     # RUN SERVER
     app.run_server(debug=False, port=8052)
