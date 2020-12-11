@@ -13,7 +13,7 @@ def main():
     start_server()
 
 def start_server():
-    with open('libact_list') as f:
+    with open('data/libact_list') as f:
         libact_list = f.read().splitlines()
 
     # INPUT SECTION
