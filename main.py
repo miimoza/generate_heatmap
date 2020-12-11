@@ -17,12 +17,18 @@ def start_server():
         libact_list = f.read().splitlines()
 
     # INPUT SECTION
+    headerSection = [
+        html.H1("Cluster Paris")
+    ]
+
     inputSection = [
         dcc.Checklist(
             #id='heatmap-input',
             id='libact',
             options=[
-                {'label': libact, 'value': libact} for libact in libact_list]
+                {'label': libact, 'value': libact} for libact in libact_list
+            ],
+            style=styleInput
         ),
         #dcc.Input(id='input-on-submit', value='Tabac', type="text"),
         html.Button('Click Me', id='submit-val', n_clicks=0)
@@ -34,8 +40,12 @@ def start_server():
     # DASH
     app = dash.Dash(__name__)
     app.layout = html.Div([
-        html.Div(inputSection, style = styleInputDiv),
-        html.Div(mapSection, style = styleMapDiv)
+        html.Div(headerSection, style = styleHeaderDiv),
+        html.Div([
+            html.Div(mapSection, style = styleMapDiv),
+            html.Div(inputSection, style = styleInputDiv)
+        ], style = styleMainSection)
+
     ], style = styleContainer)
 
     # CALLBACKS
@@ -44,11 +54,7 @@ def start_server():
         [dash.dependencies.Input('submit-val', 'n_clicks')],
         [dash.dependencies.State('libact', 'value')])
     def update_output(n_clicks, value):
-        print("nclicks: " + str(n_clicks))
         print("value: " + str(value))
-        if value == []:
-            print("None of the checkboxes is checkked!")
-            return "ptn tu coche rien mec"
         return figure.get_figure(value)
 
     # RUN SERVER
@@ -63,10 +69,18 @@ styleContainer = {
     'display': 'flex'
 }
 
-styleInputDiv = {
+styleHeaderDiv = {
     'backgroundColor': 'red',
     'padding': '4px',
     'font-size' : '12px'
+}
+
+styleMainSection = {
+    'overflow': 'hidden',
+    'backgroundColor': 'lime',
+    'flex': '1',
+    'flex-direction': 'row',
+    'display': 'flex'
 }
 
 styleMapDiv = {
@@ -78,6 +92,19 @@ styleMapDiv = {
 styleMap = {
     'height': '100%',
     'width': '100%'
+}
+
+styleInputDiv = {
+    'backgroundColor': 'purple',
+    'flex-direction': 'column',
+    'display': 'flex'
+}
+
+styleInput = {
+    'backgroundColor': 'orange',
+    'overflow-y': 'scroll',
+    'flex-direction': 'column',
+    'display': 'flex'
 }
 
 if __name__ == "__main__":

@@ -39,11 +39,10 @@ def load_geojson(path):
 def load_data(libact_list):
     df_places = geo_panda.copy(deep=True)
 
-
-    #df_places = df_places[LIBACT == ]
-    #df_places = df_places.query("LIBACT != 'Locaux Vacants' and\
-    #                         LIBACT != 'Locaux en travaux' and\
-    #                         LIBACT != 'Bureau en boutique'")
+    if (libact_list == None or len(libact_list) == 0):
+        return df_places.query("LIBACT != 'Locaux Vacants' and\
+                                LIBACT != 'Locaux en travaux' and\
+                                LIBACT != 'Bureau en boutique'")
 
     print("Generate geopandas dataframe with libacts: " + str(libact_list))
     df_final = df_places[df_places.LIBACT == libact_list[0]]
