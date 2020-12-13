@@ -9,17 +9,17 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import time
 
-def get_figure(libact_list, heatmap=True):
+def get_figure(libact_list, display_type='heatmap', center=dict(lat=48.86, lon=2.35), zoom=12.2):
     df_places = load_data(libact_list)
 
     lon, lat = get_coord(df_places)
 
-    if heatmap:
+    if display_type == 'heatmap':
         fig = px.density_mapbox(df_places, lon=lon, lat=lat, hover_name="LIBACT", \
-                            radius=8, center=dict(lat=48.86, lon=2.35), zoom=12.2)
+                            radius=8, center=center, zoom=zoom)
     else:
         fig = px.scatter_mapbox(df_places, lon=lon, lat=lat, hover_name="LIBACT", \
-                            center=dict(lat=48.86, lon=2.35), zoom=12.2)
+                            center=center, zoom=zoom)
 
 
     # TRACES (markers)
@@ -28,6 +28,7 @@ def get_figure(libact_list, heatmap=True):
     # LAYOUT (background, margins)
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.update_layout(uirevision=True)
 
     # RETURN
     return fig

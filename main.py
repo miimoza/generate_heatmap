@@ -18,24 +18,33 @@ def start_server():
 
     # INPUT SECTION
     headerSection = [
-        html.H1("Cluster Paris")
+        html.H1("Cluster Paris"),
+        dcc.Dropdown(
+            id='display-selector',
+            options=[
+                {'label': 'Heat map', 'value': 'heatmap'},
+                {'label': 'Points', 'value': 'plots'},
+            ],
+            value='heatmap',
+            searchable=False,
+            clearable=False,
+            style=styleDisplaySelector
+        )  
     ]
 
     inputSection = [
         dcc.Checklist(
-            #id='heatmap-input',
-            id='libact',
+            id='libact-checklist',
             options=[
                 {'label': libact, 'value': libact} for libact in libact_list
             ],
             style=styleInput
         ),
-        #dcc.Input(id='input-on-submit', value='Tabac', type="text"),
-        html.Button('Click Me', id='submit-val', n_clicks=0)
+        html.Button('Actualiser', id='submit-button', n_clicks=0)
     ]
 
     # MAP SECTION
-    mapSection = dcc.Graph(id='output-iframe', style=styleMap)
+    mapSection = dcc.Graph(id='output-graph', style=styleMap)
 
     # DASH
     app = dash.Dash(__name__)
@@ -50,12 +59,15 @@ def start_server():
 
     # CALLBACKS
     @app.callback(
-        dash.dependencies.Output('output-iframe', 'figure'),
-        [dash.dependencies.Input('submit-val', 'n_clicks')],
-        [dash.dependencies.State('libact', 'value')])
-    def update_output(n_clicks, value):
-        print("value: " + str(value))
-        return figure.get_figure(value)
+        dash.dependencies.Output('output-graph', 'figure'),
+        [dash.dependencies.Input('submit-button', 'n_clicks'), dash.dependencies.Input('display-selector', 'value')],
+        [
+            dash.dependencies.State('libact-checklist', 'value')
+            
+        ]
+    )
+    def update_output(n_clicks, display_type, libact_list):
+        return figure.get_figure(libact_list, display_type)
 
     # RUN SERVER
     app.run_server(debug=False, port=8052)
@@ -73,6 +85,10 @@ styleHeaderDiv = {
     'backgroundColor': 'red',
     'padding': '4px',
     'font-size' : '12px'
+}
+
+styleDisplaySelector = {
+    'width': '25%'
 }
 
 styleMainSection = {

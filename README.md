@@ -2,8 +2,9 @@ TO DO LIST
 ==========
 
 - [X] input pour choisir libact
-    - [ ] multiple libacts
-- [ ] input pour choisir heatmap mode ou point mode
+    - [X] multiple libacts
+- [X] input pour choisir heatmap mode ou point mode
+- [X] concerver zoom et position
 - [ ] donner les activites les plus courantes dans un secteur dessines
 - [ ] donner la specifite d'une zone dessine par rapport a la moyenne
 - [ ] detecteur de cluster pour une activite
