@@ -1,10 +1,14 @@
-TO DO LIST  
-==========
+Paris Clusters
+==============
+
+
+## TO DO LIST  
 
 - [X] input pour choisir libact
     - [X] multiple libacts
 - [X] input pour choisir heatmap mode ou point mode
-- [X] concerver zoom et position
+- [X] conserver zoom et position
+- [X] Pipfile
 - [ ] donner les activites les plus courantes dans un secteur dessines
 - [ ] donner la specifite d'une zone dessine par rapport a la moyenne
 - [ ] detecteur de cluster pour une activite
