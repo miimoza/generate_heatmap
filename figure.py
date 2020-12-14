@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# figure.py
 import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
