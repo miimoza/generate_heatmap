@@ -52,7 +52,15 @@ def start_server(title):
     ]
 
     # MAP SECTION
-    mapSection = dcc.Graph(id='output-graph', style=styleMap)
+    mapSection = dcc.Graph(
+        id='output-graph',
+        config={
+            'displaylogo': False,
+            'showscale': False,
+            'modeBarButtonsToRemove': ['pan2d', 'lasso2d']
+        },
+        style=styleMap
+    )
 
     # DASH
     app = dash.Dash(__name__)

@@ -17,6 +17,7 @@ def get_figure(libact_list, display_type='heatmap', center=dict(lat=48.86, lon=2
     if display_type == 'heatmap':
         fig = px.density_mapbox(df_places, lon=lon, lat=lat, hover_name="LIBACT", \
                             radius=8, center=center, zoom=zoom)
+        fig.update(layout_coloraxis_showscale=False)
     else:
         fig = px.scatter_mapbox(df_places, lon=lon, lat=lat, hover_name="LIBACT", \
                             center=center, zoom=zoom)
