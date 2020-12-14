@@ -1,5 +1,8 @@
 # server.py
+
 import figure
+
+import os
 
 import dash
 import dash_html_components as html
@@ -21,7 +24,7 @@ def start_server(title):
         #    ],
         #    style=styleInput
         #),
-        html.H3("Affichage"),
+        html.H3('Affichage'),
         dcc.Dropdown(
             id='display-selector',
             options=[
@@ -35,7 +38,7 @@ def start_server(title):
             style=styleDisplaySelector
         ),
         html.Br(),
-        html.H3("Filtres"),
+        html.H3('Filtres'),
         dcc.Dropdown(
             id='libact-selector',
             options=[
@@ -63,7 +66,8 @@ def start_server(title):
     )
 
     # DASH
-    app = dash.Dash(__name__)
+    assets_path = os.getcwd() + '/assets'
+    app = dash.Dash(__name__, assets_folder=assets_path)
     app.title = title
     app.layout = html.Div([
         html.Div(headerSection, style = styleHeaderDiv),

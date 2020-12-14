@@ -1,4 +1,5 @@
 # figure.py
+
 import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
@@ -7,6 +8,7 @@ import numpy as np
 import geopandas as gpd
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+
 import time
 
 def get_figure(libact_list, display_type='heatmap', center=dict(lat=48.86, lon=2.35), zoom=12.2):
@@ -15,11 +17,11 @@ def get_figure(libact_list, display_type='heatmap', center=dict(lat=48.86, lon=2
     lon, lat = get_coord(df_places)
 
     if display_type == 'heatmap':
-        fig = px.density_mapbox(df_places, lon=lon, lat=lat, hover_name="LIBACT", \
+        fig = px.density_mapbox(df_places, lon=lon, lat=lat, hover_name='LIBACT', \
                             radius=8, center=center, zoom=zoom)
         fig.update(layout_coloraxis_showscale=False)
     else:
-        fig = px.scatter_mapbox(df_places, lon=lon, lat=lat, hover_name="LIBACT", \
+        fig = px.scatter_mapbox(df_places, lon=lon, lat=lat, hover_name='LIBACT', \
                             center=center, zoom=zoom)
 
 
@@ -27,8 +29,8 @@ def get_figure(libact_list, display_type='heatmap', center=dict(lat=48.86, lon=2
     fig.update_traces(marker=dict(size=8), selector=dict(mode='markers'))
 
     # LAYOUT (background, margins)
-    fig.update_layout(mapbox_style="open-street-map")
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.update_layout(mapbox_style='open-street-map')
+    fig.update_layout(margin={'r':0,'t':0,'l':0,'b':0})
     fig.update_layout(uirevision=True)
 
     # RETURN
@@ -46,10 +48,10 @@ def load_data(libact_list):
                                 LIBACT != 'Locaux en travaux' and\
                                 LIBACT != 'Bureau en boutique'")
 
-    print("Generate geopandas dataframe with libacts: " + str(libact_list))
+    print('Generate geopandas dataframe with libacts: ' + str(libact_list))
     df_final = df_places[df_places.LIBACT == libact_list[0]]
     for libact in libact_list[1:]:
-        print("Add:" + libact)
+        print('Add:' + libact)
         df_final = df_final.append(df_places[df_places.LIBACT == libact])
 
     # merge all mdr
@@ -59,7 +61,7 @@ def load_data(libact_list):
 def get_coord(df):
     lon = []
     lat = []
-    for i in df["geometry"]:
+    for i in df['geometry']:
         lon.append(i.x)
         lat.append(i.y)
 
