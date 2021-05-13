@@ -94,7 +94,7 @@ def start_server(title):
         return figure.get_figure(libact_list, display_type)
 
     # RUN SERVER
-    app.run_server(debug=False, port=8052)
+    app.run_server(debug=False, port=8052, host='0.0.0.0')
 
 styleContainer = {
     'width': '100vw',
